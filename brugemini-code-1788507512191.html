@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#17121a">
+<title>Untuk Cantik — 18 Tahun Perjalanan Kamu Bey</title>
+<style>
+:root {
+  --bg: #100c12;
+  --text: #f8f2f5;
+  --muted: #c9bdc5;
+  --accent: #f2b6c8;
+  --accent2: #d987a6;
+  --card: #1b151d;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 20% 10%, rgba(107, 64, 80, 0.11), transparent 35%),
+    radial-gradient(circle at 80% 70%, rgba(216, 139, 165, 0.1), transparent 38%);
+  z-index: -1;
+}
+
+/* =========================================================
+   1. OVERLAY HITUNG MUNDUR
+   ========================================================= */
+#countdownOverlay {
+  position: fixed;
+  inset: 0;
+  background: #0d0a0f;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+#countdownOverlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cd-title {
+  text-transform: uppercase;
+  letter-spacing: .25em;
+  font: 600 13px Arial, sans-serif;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.cd-timer {
+  font-size: clamp(64px, 18vw, 120px);
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 25px;
+  font-family: Georgia, serif;
+}
+
+.cd-subtitle {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 320px;
+  margin-bottom: 30px;
+}
+
+.cd-start-btn {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font: 600 12px Arial, sans-serif;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cd-start-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   2. STYLES TAMPILAN UTAMA
+   ========================================================= */
+section {
+  min-height: 100svh;
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.wrap {
+  width: min(920px, 100%);
+  margin: auto;
+}
+
+.center { text-align: center; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .28em;
+  font: 600 11px Arial, sans-serif;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: clamp(44px, 11vw, 110px);
+  line-height: .95;
+  margin: 0 0 24px;
+  font-weight: 400;
+  letter-spacing: -.05em;
+  word-break: break-word;
+}
+
+h2 {
+  font-size: clamp(32px, 7vw, 72px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 24px;
+  word-break: break-word;
+}
+
+p {
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height: 1.75;
+  color: var(--muted);
+  margin: 12px auto;
+  max-width: 700px;
+}
+
+.quote {
+  font-size: clamp(20px, 4.5vw, 42px);
+  line-height: 1.35;
+  color: var(--text);
+  max-width: 760px;
+}
+
+.small {
+  font: 12px Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #9f929b;
+}
+
+button, .btn {
+  border: 1px solid rgba(255, 255, 255, 0.21);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border-radius: 999px;
+  padding: 14px 23px;
+  font: 600 12px Arial, sans-serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  backdrop-filter: blur(8px);
+  transition: 0.3s;
+}
+
+button:hover, .btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   3. DEKORASI FOTO & KARTU
+   ========================================================= */
+.hero {
+  min-height: 100svh;
+  background: linear-gradient(rgba(16, 12, 18, 0.2), var(--bg)), url("kecil.jpg") center/cover no-repeat;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 25%, var(--bg) 92%);
+  z-index: 0;
+}
+
+.hero .wrap { position: relative; z-index: 1; }
+
+.scroll {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 10px Arial, sans-serif;
+  letter-spacing: .2em;
+  color: rgba(255, 255, 255, 0.53);
+}
+
+.scroll::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.33);
+  margin: 12px auto 0;
+}
+
+.photo {
+  width: 100%;
+  max-width: 580px;
+  margin: 24px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+
+.photo img {
+  width: 100%;
+  height: auto;
+  max-height: 75vh;
+  object-fit: cover;
+  display: block;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.dark { background: #0c090e; }
+
+.card {
+  background: linear-gradient(135deg, #211922, #161118);
+  padding: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.final {
+  background: linear-gradient(rgba(16, 12, 18, 0.4), var(--bg)), url("Akhir.jpg") center/cover no-repeat;
+}
+
+.final::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 15%, var(--bg) 90%);
+}
+
+.final .wrap { position: relative; z-index: 1; }
+
+.heart {
+  font-size: 26px;
+  color: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.15); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: none;
+}
+
+.music {
+  position: fixed;
+  right: 17px;
+  top: 17px;
+  z-index: 20;
+  padding: 11px 15px;
+  font-size: 10px;
+}
+
+#musicHint {
+  font: 11px Arial, sans-serif;
+  color: #b9abb3;
+  margin-top: 12px;
+}
+
+.confetti {
+  position: fixed;
+  top: -15px;
+  width: 7px;
+  height: 12px;
+  z-index: 50;
+  animation: fall 3.2s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(600deg); opacity: 0; }
+}
+
+/* =========================================================
+   4. OPTIMASI TAMPILAN HP
+   ========================================================= */
+@media (max-width: 768px) {
+  section { padding: 60px 16px; }
+  .split { grid-template-columns: 1fr; gap: 20px; }
+  .card { padding: 24px 18px; }
+  .photo { margin: 18px auto; max-width: 100%; }
+  p { line-height: 1.6; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     [AUDIO LIST]
+     ========================================================= -->
+<!-- 1. Sound Utama (Berulang terus/Loop setelah habis) -->
+<audio id="music" loop preload="auto">
+  <source src="ultah.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 2. Sound 15 Detik Timer (Otomatis mati begitu timer 0) -->
+<audio id="tickSound" preload="auto">
+  <source src="tick.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 3. Sound Selesai / Bell Chime -->
+<audio id="bellSound" preload="auto">
+  <source src="chime.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music" id="musicBtn">♫ Musik</button>
+
+<!-- =========================================================
+     OVERLAY HITUNG MUNDUR
+     ========================================================= -->
+<div id="countdownOverlay">
+  <div class="cd-title">Perjalanan 18 Cantik</div>
+  <div class="cd-timer" id="cdTimer">15</div>
+  <div class="cd-subtitle" id="cdSubtext">Persiapkan dirimu untuk mengingat kembali setiap momen indah...</div>
+  <button class="cd-start-btn" id="cdStartBtn" onclick="startCountdown()">Mulai Hitung Mundur ❤️</button>
+</div>
+
+<!-- =========================================================
+     BAGIAN HERO / PEMBUKA
+     ========================================================= -->
+<section class="hero">
+<div class="wrap center reveal">
+  <div class="eyebrow">Sebuah perjalanan untuk</div>
+  <h1>Cantik</h1>
+  <p class="quote">18 tahun. Banyak cerita. Banyak hal yang sudah kamu lewati.</p>
+  <a class="btn" href="#kecil">Mulai Perjalanan ♥</a>
+  <div id="musicHint">Musik akan otomatis menyala setelah hitung mundur selesai.</div>
+</div>
+<div class="scroll">SCROLL</div>
+</section>
+
+<!-- =========================================================
+     BAB 01 — MASA KECIL
+     ========================================================= -->
+<section id="kecil">
+<div class="wrap">
+  <div class="eyebrow reveal">Bab 01 · Awal</div>
+  <div class="split">
+    <div class="photo reveal">
+      <img src="kecil.jpg" alt="Cantik waktu kecil">
+    </div>
+    <div class="reveal">
+      <h2>Jauh sebelum Cantik yang sekarang…</h2>
+      <p>ada seorang anak kecil yang cuma tahu bagaimana caranya bermain, tertawa, dan menikmati hari.</p>
+      <p>Belum banyak yang perlu dipikirkan. Belum banyak yang perlu dikhawatirkan. Dunia terasa sesederhana hari yang panjang dan penuh permainan.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAB 02 — MASA SD
+     ========================================================= -->
+<section class="dark">
+<div class="wrap">
+  <div class="eyebrow reveal">Bab 02 · SD</div>
+  <div class="split">
+    <div class="photo reveal">
+      <img src="Voly.jpg" alt="Cantik masa SD">
+    </div>
+    <div class="reveal">
+      <h2>Masa yang penuh cerita.</h2>
+      <p>Katanya, masa SD adalah salah satu bagian yang paling banyak menyimpan kenangan indah.</p>
+      <p>Bermain, tertawa bersama teman, pulang dengan cerita masing-masing… masa ketika hidup belum menuntut kita untuk selalu terlihat kuat.</p>
+      <p>Belum harus terlalu jaim. Bahkan mungkin dulu lebih berani usil dan ngerjain anak sekolah lain.</p>
+      <p class="small">Dan semuanya terasa sederhana.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAB 03 — MASA SMP
+     ========================================================= -->
+<section>
+<div class="wrap">
+  <div class="eyebrow reveal center">Bab 03 · SMP</div>
+  <div class="photo reveal">
+    <img src="Basket.jpg" alt="Cantik bermain basket dan menjadi juara">
+  </div>
+  <div class="center reveal">
+    <h2>Di sini kamu mulai menunjukkan seberapa kuat dirimu.</h2>
+    <p>Lapangan, latihan, pertandingan, rasa capek… sampai akhirnya kamu berdiri sebagai seorang juara dan meraih beasiswa.</p>
+    <p>Foto ini bukan cuma tentang kemenangan. Ini tentang usaha yang membawa kamu sampai ke sana.</p>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAB 04 — MASA YANG BERAT
+     ========================================================= -->
+<section class="dark">
+<div class="wrap">
+  <div class="eyebrow reveal center">Bab 04 · Masa yang berat</div>
+  <div class="card reveal center">
+    <div class="photo reveal">
+      <img src="Berat.jpg" alt="Masa yang berat">
+    </div>
+    <p class="quote">“Tapi ternyata, di balik beberapa senyum, ada masa yang tidak mudah untuk dilewati.”</p>
+    <p>Ada masalah yang datang terlalu cepat untuk seseorang yang masih begitu muda. Ada hal-hal yang mungkin tidak semua orang tahu.</p>
+    <p>Dan mungkin ada rasa sakit yang harus kamu simpan sendiri lebih lama dari yang seharusnya.</p>
+    <p><strong style="color:#fff">Tapi kamu tetap bertahan.</strong></p>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAB 05 — TERUS BERJALAN
+     ========================================================= -->
+<section>
+<div class="wrap">
+  <div class="split">
+    <div class="photo reveal">
+      <img src="Gunung.jpg" alt="Cantik naik gunung">
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Bab 05 · Terus berjalan</div>
+      <h2>Hidup juga seperti mendaki.</h2>
+      <p>Ada tanjakan. Ada lelah. Ada rasa ingin berhenti.</p>
+      <p>Tapi setiap langkah yang kamu ambil membuatmu semakin jauh dari tempat kamu memulai.</p>
+      <p class="quote">Dan lihat sekarang… kamu sudah sampai sejauh ini.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAB 06 — 18 TAHUN
+     ========================================================= -->
+<section class="dark">
+<div class="wrap center">
+  <div class="eyebrow reveal">Bab 06 · 18</div>
+  <h2 class="reveal">Happy 18th Birthday,<br><i>Cantikku.</i></h2>
+  <p class="reveal">Kamu sudah melewati semuanya.</p>
+  <p class="reveal">Dari seorang anak kecil yang hanya tahu bagaimana caranya bermain dan tertawa, sampai menjadi seseorang yang sudah belajar menghadapi banyak hal sendiri. Kamu Kuat Bey. Setelah semua tangisan dan senyuman yang kamu lewati, aku yakin kamu bisa.</p>
+  <p class="reveal">Beberapa bulan lagi kamu akan lulus sekolah.</p>
+  <p class="reveal">Setelah 12 tahun perjalanan pendidikan, sebentar lagi kamu akan membuka halaman baru dalam hidupmu.</p>
+</div>
+</section>
+
+<!-- =========================================================
+     PESAN DARIKU
+     ========================================================= -->
+<section>
+<div class="wrap center">
+  <div class="eyebrow reveal">Dari aku untuk kamu</div>
+  <div class="photo reveal">
+    <img src="berdua2.jpg" alt="Foto Berdua">
+  </div>
+  <div class="card reveal">
+    <p class="quote">“Kamu harus jadi lebih kuat ya.”</p>
+    <p>Dunia setelah ini mungkin tidak selalu mudah. Akan ada masalah yang datang, ada hari ketika kamu capek, takut, bingung, bahkan mungkin ingin menyerah.</p>
+    <p>Tapi jangan takut untuk melangkah.</p>
+    <p>Atasi masalah kamu satu per satu. Jangan pernah meragukan seberapa kuat dirimu sendiri.</p>
+    <p class="quote">Dan ingat… selama ada aku, kamu selalu punya <strong>backup.</strong></p>
+    <p>Aku mungkin tidak bisa menyelesaikan semua masalahmu. Tapi aku akan tetap ada untuk mendukungmu, mendengarkanmu, dan berdiri di sampingmu ketika semuanya terasa berat. Kamu selalu punya aku buat ngadu masalah dalam atau luar rumah, pundak aku selalu siap.</p>
+  </div>
+</div>
+</section>
+
+<!-- =========================================================
+     BAGIAN AKHIR / FOTO TERAKHIR
+     ========================================================= -->
+<section class="final">
+<div class="wrap center">
+  <div class="photo reveal">
+    <img src="Akhir.jpg" alt="Cantik sekarang">
+  </div>
+  <div class="eyebrow reveal">Bab terakhir · Bukan akhir</div>
+  <h2 class="reveal">Kita sukses<br>bareng-bareng ya.</h2>
+  <p class="reveal">Kita tumbuh bareng. Kita hadapi dunia bareng.</p>
+  <p class="reveal">Kalau suatu hari semuanya terasa berat, ingat…</p>
+  <p class="quote reveal">“Kamu nggak sendirian. Selama ada aku, kamu punya backup.”</p>
+  <div class="heart reveal">♥</div>
+  <p class="reveal"><strong style="color:#fff">Happy 18th Birthday, Cantik.</strong><br>Terima kasih sudah bertahan sampai sejauh ini.</p>
+</div>
+</section>
+
+<!-- =========================================================
+     JAVASCRIPT LOGIC
+     ========================================================= -->
+<script>
+// --- ANIMASI REVEAL SAAT SCROLL ---
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) e.target.classList.add('show');
+}), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(x => obs.observe(x));
+
+// --- TOMBOL CONTROL MUSIK UTAMA ---
+const audio = document.getElementById('music');
+const btn = document.getElementById('musicBtn');
+const bellSound = document.getElementById('bellSound');
+const tickSound = document.getElementById('tickSound');
+
+btn.onclick = async () => {
+  try {
+    if (audio.paused) {
+      await audio.play();
+      btn.textContent = '♫ Matikan';
+    } else {
+      audio.pause();
+      btn.textContent = '♫ Musik';
+    }
+  } catch(e) {
+    console.log(e);
+  }
+};
+
+// --- ANIMASI CONFETTI DI AKHIR ---
+let done = false;
+const confetti = () => {
+  if (done) return;
+  done = true;
+  for (let i = 0; i < 70; i++) {
+    let x = document.createElement('i');
+    x.className = 'confetti';
+    x.style.left = Math.random() * 100 + 'vw';
+    x.style.animationDelay = Math.random() * 1.2 + 's';
+    x.style.transform = `rotate(${Math.random() * 360}deg)`;
+    x.style.background = `hsl(${Math.random() * 360}, 70%, 75%)`;
+    document.body.appendChild(x);
+    setTimeout(() => x.remove(), 4500);
+  }
+};
+const last = document.querySelector('.final');
+new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) confetti();
+}), { threshold: .3 }).observe(last);
+
+// --- LOGIKA HITUNG MUNDUR & PEMUTARAN EFEK SUARA ---
+let timeLeft = 15;
+let timerInterval = null;
+
+function startCountdown() {
+  document.getElementById('cdStartBtn').style.display = 'none';
+  
+  // Unlock permission browser untuk audio
+  bellSound.play().then(() => { bellSound.pause(); bellSound.currentTime = 0; }).catch(() => {});
+  audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(() => {});
+
+  // 1. DEMAINKAN SUARA TICK 15 DETIK
+  tickSound.currentTime = 0;
+  tickSound.play().catch(e => console.log("Tick sound error:", e));
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('cdTimer').textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      finishCountdown();
+    }
+  }, 1000);
+}
+
+function finishCountdown() {
+  // 2. STOP SUARA TICK SEKETIKA TIMER SELESAI
+  tickSound.pause();
+  tickSound.currentTime = 0;
+
+  document.getElementById('cdTimer').textContent = "✨";
+  document.getElementById('cdSubtext').textContent = "Selamat datang di perjalananmu...";
+  
+  // Bunyikan Bell
+  bellSound.play().catch(e => console.log("Sound bell audio error:", e));
+  
+  // 3. MULAI PLAY MUSIK UTAMA (AUTO-LOOP)
+  setTimeout(() => {
+    document.getElementById('countdownOverlay').classList.add('hidden');
+    audio.play().then(() => {
+      btn.textContent = '♫ Matikan';
+    }).catch(e => console.log("Audio play error:", e));
+  }, 1200);
+}
+</script>
+</body>
+</html>
